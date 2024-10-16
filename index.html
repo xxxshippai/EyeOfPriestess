@@ -7,36 +7,64 @@
     <style>
         body {
             background-color: #000;
-            color: hsl(0, 0%, 100%);
             font-family: 'Courier New', monospace;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             overflow: hidden;
+            position: relative;
+        }
 
-            /* Add the WebP background */
-            /*background-image: url('Babel.webp');*/
+        /* Background container with image and brightness filter */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('your-image.webp');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
+            filter: brightness(0.3);
+            z-index: -1;
         }
+
+        /* Container for the console text and rhombus */
+        .content {
+            position: relative;
+            color: hsl(0, 0%, 100%);
+            z-index: 1;
+        }
+
         .console {
             font-size: 24px;
-            white-space: pre-wrap; /* Ensures that spaces and line breaks are preserved */
+            white-space: pre-wrap;
         }
+
         .rhombus {
             font-size: 18px;
             text-align: center;
-            white-space: pre; /* Preserves exact spacing and newlines */
+            white-space: pre;
             visibility: hidden;
         }
     </style>
 </head>
 <body>
-    <div class="console" id="console"></div>
-    <div class="rhombus" id="rhombus"></div>
 
+    <!-- Background image with low brightness -->
+    <div class="background"></div>
+
+    <!-- Content with text and rhombus -->
+    <div class="content">
+        <div class="console" id="console"></div>
+        <div class="rhombus" id="rhombus"></div>
+    </div>
+
+    <!-- Audio file -->
+    <audio id="sound" src="priestess fly me to the moon.mp3"></audio> <!-- Replace with your actual sound file -->
+    
     <script src="app.js"></script>
 </body>
 </html>
