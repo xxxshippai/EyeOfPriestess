@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Rhombus Visualization</title>
+    <style>
+        body {
+            background-color: #000;
+            color: hsl(0, 0%, 100%);
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+
+            /* Add the WebP background */
+            /*background-image: url('Babel.webp');*/
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .console {
+            font-size: 24px;
+            white-space: pre-wrap; /* Ensures that spaces and line breaks are preserved */
+        }
+        .rhombus {
+            font-size: 18px;
+            text-align: center;
+            white-space: pre; /* Preserves exact spacing and newlines */
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="console" id="console"></div>
+    <div class="rhombus" id="rhombus"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
