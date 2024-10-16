@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const consoleElement = document.getElementById("console");
     const rhombusElement = document.getElementById("rhombus");
     const soundElement = document.getElementById("sound");
-    const delayBeforeQuestion = 2000;//139767;
+    const delayBeforeQuestion = 139767;
 
     const rhombusLines = [
         "*",
