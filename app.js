@@ -1,13 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     const text = "Have you finally remembered, Doctor?\nThe past?           \nUs?           \nI'm glad.           \nWelcome back.";
     const text2 = "What do you seek?";
+    const answer1 = 'Where pure white meets pitch black.';
+    const answer2 = 'Where frigid winds caress the ground.';
+    const answer3 = 'Where mementos of past lay dormant.';
+    const answer4 = 'You will find me.';
+    const answer5 = `Is it truly what you seek?`;
+    const answer6 = `. . .`;
+    const answer7 = `Then what is it that you seek?`;
     const typingSpeed = 100;
     const delayBeforeRhombus = 2000;
     const delayBeforeInput = 2000;  // Delay before allowing user input
     const consoleElement = document.getElementById("console");
     const rhombusElement = document.getElementById("rhombus");
     const soundElement = document.getElementById("sound");
-    const delayBeforeQuestion = 139767;
+    const delayBeforeQuestion = 2000; //139767;
 
     const rhombusLines = [
         "*",
@@ -24,18 +31,28 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     let index = 0;
+    let inputAllowed = false;
 
     // Function to type text character by character
     function typeText() {
-        /*if (index < text.length) {
-            consoleElement.textContent += text.charAt(index);
-            index++;
-            setTimeout(typeText, typingSpeed);
-        } else {
-            setTimeout(clearText, delayBeforeRhombus);
-        }*/
-        consoleElement.textContent = '';
         displayRhombus();
+    }
+
+    function typeText2(text, callback) {
+        consoleElement.textContent = '';  // Clear previous text
+        index = 0;  // Reset index for new text
+
+        function typeNextChar() {
+            if (index < text.length) {
+                consoleElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeNextChar, typingSpeed);
+            } else if (callback) {
+                setTimeout(callback, delayBeforeInput);  // Wait before allowing input again
+            }
+        }
+
+        typeNextChar();
     }
 
     // Function to clear the text after a delay
@@ -62,13 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function displayQuestion() {
         rhombusElement.textContent = '';
-        if (index < text2.length) {
-            consoleElement.textContent += text2.charAt(index);
-            index++;
-            setTimeout(displayQuestion, typingSpeed);
-        }
-
-        setTimeout(allowUserInput, delayBeforeInput);
+        index = 0; // Reset index
+        typeText2(text2, allowUserInput);  // Display the question and allow input
     }
 
     // Function to allow user input
@@ -87,29 +99,34 @@ document.addEventListener("DOMContentLoaded", function () {
         inputElement.style.border = "none";  // Remove border
         inputElement.style.outline = "none";  // Remove focus outline (blue border)
         inputElement.style.zIndex = 1;
-    
+
         document.body.appendChild(inputElement);
-    
+
         // Focus on the input so the user can type immediately
         inputElement.focus();
-    
+
         // Handle user input (e.g., when the user presses 'Enter')
         inputElement.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
                 const userInput = inputElement.value;
-                if (userInput != `Priestess` && userInput != `priestess`) {
-                    consoleElement.textContent = `Is it truly what you seek?`;
-                    allowUserInput2();
-                }
-                else {
-                    consoleElement.textContent = `Where pure white meets pitch black.`;
-                }
                 inputElement.remove();  // Remove the input after the user submits
+
+                if (userInput == `Priestess` || userInput == `priestess`) {
+                    typeText2(answer1, allowUserInput);  // Callback to allow input again after text is displayed
+                } else if (userInput == `Pure white` || userInput == `pure white` || userInput == `Pure White`) {
+                    typeText2(answer2, allowUserInput);
+                } else if (userInput == `Pitch black` || userInput == `pitch black` || userInput == `Pitch Black`) {
+                    typeText2(answer3, allowUserInput);
+                } else if (userInput == `You` || userInput == `you`) {
+                    typeText2(answer4, allowUserInput);
+                } else {
+                    typeText2(answer5, allowUserInput2);  // After this, allow the second input stage
+                }
             }
         });
     }
 
-    // Function to allow user input
+    // Function to allow user input in second phase
     function allowUserInput2() {
         const inputElement = document.createElement("input");
         inputElement.type = "text";
@@ -125,25 +142,23 @@ document.addEventListener("DOMContentLoaded", function () {
         inputElement.style.border = "none";  // Remove border
         inputElement.style.outline = "none";  // Remove focus outline (blue border)
         inputElement.style.zIndex = 1;
-    
+
         document.body.appendChild(inputElement);
-    
+
         // Focus on the input so the user can type immediately
         inputElement.focus();
-    
+
         // Handle user input (e.g., when the user presses 'Enter')
         inputElement.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
                 const userInput = inputElement.value;
-                if (userInput != `No` && userInput != `no`) {
-                    consoleElement.textContent = `. . .`;
-                    allowUserInput2();
-                }
-                else {
-                    consoleElement.textContent = `Then what is it that you seek?`;
-                    allowUserInput();
-                }
                 inputElement.remove();  // Remove the input after the user submits
+
+                if (userInput != `No` && userInput != `no`) {
+                    typeText2(answer6, allowUserInput2);  // If no, stay in this phase
+                } else {
+                    typeText2(answer7, allowUserInput);  // Return to the first input phase
+                }
             }
         });
     }
